@@ -1628,9 +1628,11 @@ let main_aux ~initial_env =
       Toploop.read_interactive_input := read_input_classic;
       Toploop.loop Format.std_formatter
     end
-  end;
+  end
+  (* ; *)
   (* Don't let the standard toplevel run... *)
-  exit 0
+  (* exit 0 *)
+  (* () *)
 
 let main_internal ~initial_env =
   let exit_status = ref 2 in
