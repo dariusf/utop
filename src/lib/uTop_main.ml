@@ -1593,7 +1593,7 @@ let load_inputrc () =
 let protocol_version = 1
 
 let main_aux ~initial_env =
-  Arg.parse args file_argument usage;
+  (* Arg.parse args file_argument usage; *)
   if not (prepare ()) then exit 2;
   if !emacs_mode then begin
     Printf.printf "protocol-version:%d\n%!" protocol_version;
