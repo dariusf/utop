@@ -9,11 +9,11 @@
 
 [@@@warning "-27"]
 
-open CamomileLibraryDefault.Camomile
+(* open CamomileLibraryDefault.Camomile *)
 open Lwt_react
-open LTerm_text
-open LTerm_geom
-open LTerm_style
+(* open LTerm_text *)
+(* open LTerm_geom *)
+(* open LTerm_style *)
 
 let (>>=) = Lwt.(>>=)
 
@@ -403,7 +403,7 @@ let check_phrase phrase =
    | Prompt                                                          |
    +-----------------------------------------------------------------+ *)
 
-let make_prompt ui profile count size key_sequence (recording, macro_count, macro_counter) =
+(* let make_prompt ui profile count size key_sequence (recording, macro_count, macro_counter) =
   let tm = Unix.localtime !time in
   let color dark light =
     match profile with
@@ -480,9 +480,9 @@ let make_prompt ui profile count size key_sequence (recording, macro_count, macr
                 (Zed_char.unsafe_of_uChar (UChar.of_int 0x2500), { none with foreground = Some (color lcyan blue); bold = Some bold });
               txtb;
             ]
-        ) second_line
+        ) second_line *)
 
-let default_prompt =
+(* let default_prompt =
   S.l6 make_prompt
     UTop_private.ui
     profile
@@ -492,8 +492,9 @@ let default_prompt =
     (S.l3 (fun x y z -> (x, y, z))
        (Zed_macro.recording LTerm_read_line.macro)
        (Zed_macro.count LTerm_read_line.macro)
-       (Zed_macro.counter LTerm_read_line.macro))
+       (Zed_macro.counter LTerm_read_line.macro)) *)
 
+let default_prompt = S.const (LTerm_text.of_utf8 "# ")
 let prompt = ref default_prompt
 
 let edit_mode= ref LTerm_editor.Default
