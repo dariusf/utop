@@ -1686,7 +1686,7 @@ let walk dir ~init ~f =
   | _ -> loop dir init
 
 let interact ?(search_path=[]) ?(build_dir="_build") ~unit ~loc:(fname, lnum, cnum, _)
-      ~values =
+      ~values () =
   let search_path = walk build_dir ~init:search_path ~f:(fun dir acc -> dir :: acc) in
   let cmt_fname =
     try
