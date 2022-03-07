@@ -1593,9 +1593,7 @@ let load_inputrc () =
 let protocol_version = 1
 
 let main_aux ~initial_env =
-  print_endline ("at the top of main");
   Arg.parse args file_argument usage;
-  print_endline ("parse args");
   if not (prepare ()) then exit 2;
   if !emacs_mode then begin
     Printf.printf "protocol-version:%d\n%!" protocol_version;
@@ -1605,22 +1603,17 @@ let main_aux ~initial_env =
     common_init ~initial_env;
     Emacs.loop ()
   end else begin
-  print_endline ("not emacs");
     UTop_private.set_ui UTop_private.Console;
     let term = Lwt_main.run (Lazy.force LTerm.stdout) in
     if LTerm.incoming_is_a_tty term && LTerm.outgoing_is_a_tty term then begin
       (* Set the initial size. *)
       UTop_private.set_size (S.const (LTerm.size term));
-      print_endline ("before load user data");
       (* Load user data. *)
       Lwt_main.run (Lwt.join [UTop_styles.load (); load_inputrc ()]);
-      print_endline ("after rc");
       (* Display a welcome message. *)
       Lwt_main.run (welcome term);
-      print_endline ("after welcome");
       (* Common initialization. *)
       common_init ~initial_env;
-      print_endline ("after init");
       (* Print help message. *)
       print_string "\nType #utop_help for help about using utop.\n\n";
       flush stdout;
@@ -1628,7 +1621,6 @@ let main_aux ~initial_env =
       try
         loop term
       with LTerm_read_line.Interrupt ->
-        print_endline ("interrupted");
         ()
     end else begin
       (* Use the standard toplevel. Just make sure that Lwt threads can
@@ -1741,16 +1733,11 @@ let interact ?(search_path=[]) ?(build_dir="_build") ~unit ~loc:(fname, lnum, cn
     failwith "Couldn't find location in cmt file"
   with Found env ->
   try
-    List.iter (fun s -> Format.printf "search path %s@." s) (search_path @ cmt_infos.cmt_loadpath);
     List.iter Topdirs.dir_directory (search_path @ cmt_infos.cmt_loadpath);
     let env = Envaux.env_of_only_summary env in
-    List.iter (fun (V (name, v)) ->
-      Format.printf "set value %s@." name;
-      Toploop.setvalue name (Obj.repr v)) values;
-      print_endline ("starting main");
+    List.iter (fun (V (name, v)) -> Toploop.setvalue name (Obj.repr v)) values;
     main_internal ~initial_env:(Some env)
   with exn ->
-    print_endline ("error while settin values");
     Location.report_exception Format.err_formatter exn;
     exit 2
 
