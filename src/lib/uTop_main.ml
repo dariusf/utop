@@ -889,29 +889,29 @@ let rec loop term =
 
 let welcome term =
   (* Create a context to render the welcome message. *)
-  let size = LTerm.size term in
-  let size = { rows = 3; cols = size.cols } in
-  let matrix = LTerm_draw.make_matrix size in
-  let ctx = LTerm_draw.context matrix size in
+  (* let size = LTerm.size term in *)
+  (* let size = { rows = 3; cols = size.cols } in *)
+  (* let matrix = LTerm_draw.make_matrix size in *)
+  (* let ctx = LTerm_draw.context matrix size in *)
 
   (* Draw the message in a box. *)
 
-  let message = Printf.sprintf "Welcome to utop version %s (using OCaml version %s)!" UTop.version Sys.ocaml_version in
+  (* let message = Printf.sprintf "Welcome to utop version %s (using OCaml version %s)!" UTop.version Sys.ocaml_version in *)
 
-  LTerm_draw.fill_style ctx LTerm_style.({ none with foreground = Some lcyan });
+  (* LTerm_draw.fill_style ctx LTerm_style.({ none with foreground = Some lcyan }); *)
 
-  LTerm_draw.draw_hline ctx 0 0 size.cols LTerm_draw.Light;
-  LTerm_draw.draw_frame ctx {
+  (* LTerm_draw.draw_hline ctx 0 0 size.cols LTerm_draw.Light; *)
+  (* LTerm_draw.draw_frame ctx {
     row1 = 0;
     row2 = 3;
     col1 = (size.cols - (String.length message + 4)) / 2;
     col2 = (size.cols + (String.length message + 4)) / 2;
-  } LTerm_draw.Light;
+  } LTerm_draw.Light; *)
 
-  LTerm_draw.draw_styled ctx 1 ((size.cols - String.length message) / 2) (eval [B_fg LTerm_style.yellow; S message]);
+  (* LTerm_draw.draw_styled ctx 1 ((size.cols - String.length message) / 2) (eval [B_fg LTerm_style.yellow; S message]); *)
 
   (* Render to the screen. *)
-  LTerm.print_box term matrix >>= fun () ->
+  (* LTerm.print_box term matrix >>= fun () -> *)
 
   (* Move to after the box. *)
   LTerm.fprint term "\n" >>= fun () ->
@@ -1615,7 +1615,7 @@ let main_aux ~initial_env =
       (* Common initialization. *)
       common_init ~initial_env;
       (* Print help message. *)
-      print_string "\nType #utop_help for help about using utop.\n\n";
+      (* print_string "\nType #utop_help for help about using utop.\n\n"; *)
       flush stdout;
       (* Main loop. *)
       try
